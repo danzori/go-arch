@@ -31,7 +31,7 @@ The goal is not to follow any of these approaches dogmatically, but to combine t
 ├── config
 ├── internal
 │   ├── application
-│   │   └── <domain-name>
+│   │   └── <feature>
 │   │       └── mocks
 │   ├── bootstrap
 │   ├── config
@@ -90,14 +90,14 @@ The goal is not to follow any of these approaches dogmatically, but to combine t
 
 ### Root directories
 
-| Directory    | Purpose                                                                                                                  |
-|--------------|--------------------------------------------------------------------------------------------------------------------------|
-| `api/`       | External contracts for HTTP, gRPC and asynchronous messaging.                                                            |
-| `cmd/`       | Process entry points. Keeps executable startup code thin and delegates application composition to `internal/bootstrap/`. |
-| `config/`    | Application configuration files.                                                                                         |
-| `internal/`  | Private application implementation.                                                                                      |
-| `migrations` | Database migrations.                                                                                                     |
-| `test/`      | Cross-package tests.                                                                                                     |
+| Directory     | Purpose                                                                                                                  |
+|---------------|--------------------------------------------------------------------------------------------------------------------------|
+| `api/`        | External contracts for HTTP, gRPC and asynchronous messaging.                                                            |
+| `cmd/`        | Process entry points. Keeps executable startup code thin and delegates application composition to `internal/bootstrap/`. |
+| `config/`     | Application configuration files.                                                                                         |
+| `internal/`   | Private application implementation.                                                                                      |
+| `migrations/` | Database migrations.                                                                                                     |
+| `test/`       | Cross-package tests.                                                                                                     |
 
 ---
 
@@ -123,11 +123,11 @@ The goal is not to follow any of these approaches dogmatically, but to combine t
 
 #### `application/` - Application use cases and orchestration
 
-| Directory / File         | Purpose                                                             |
-|--------------------------|---------------------------------------------------------------------|
-| `<domain-name>/`         | Application logic for a specific business area.                     |
-| `<domain-name>/ports.go` | Interfaces for dependencies required by the application layer.      |
-| `<domain-name>/mocks/`   | Generated mocks for interfaces defined in `<domain-name>/ports.go`. |
+| Directory / File     | Purpose                                                         |
+|----------------------|-----------------------------------------------------------------|
+| `<feature>/`         | Application logic grouped by a feature.                         |
+| `<feature>/ports.go` | Interfaces for dependencies required by the application layer.  |
+| `<feature>/mocks/`   | Generated mocks for interfaces defined in `<feature>/ports.go`. |
 
 #### `domain/` - Domain model and business rules
 
@@ -142,7 +142,7 @@ The goal is not to follow any of these approaches dogmatically, but to combine t
 |------------|-----------------------------------------------------------------------------------|
 | `http/`    | HTTP inbound adapter.                                                             |
 | `grpc/`    | gRPC inbound adapter.                                                             |
-| `event/`   | Inbound event adapters.                                                           |
+| `event/`   | Inbound adapters for consuming messages and events.                               |
 | `cli/`     | CLI inbound adapter.                                                              |
 | `<other>/` | Additional adapters can be added here as needed, e.g. WebSocket, QUIC or GraphQL. |
 
@@ -179,9 +179,9 @@ The goal is not to follow any of these approaches dogmatically, but to combine t
 
 #### `worker/` - Background execution
 
-| Directory   | Purpose                                                            |
-|-------------|--------------------------------------------------------------------|
-| `<worker>/` | Background tasks such as cron jobs, scheduled jobs, queue workers. |
+| Directory   | Purpose                                                |
+|-------------|--------------------------------------------------------|
+| `<worker>/` | Background tasks such as cron jobs and scheduled jobs. |
 
 #### `infrastructure/` - Outbound adapters and technical infrastructure
 
@@ -259,6 +259,7 @@ The goal is not to follow any of these approaches dogmatically, but to combine t
 |-----------------|-------------------------------------------------------------------------------------------------|--------------------------------|
 | `<service>`     | Executable name. Use `service` for a single binary or the binary name for multiple executables. | `service`, `seed`              |
 | `<domain-name>` | Business domain or bounded context.                                                             | `user`, `order`                |
+| `<feature>`     | Feature name used to group related application logic.                                           | `profile`, `session`, `search` |
 | `<command>`     | CLI command name.                                                                               | `migrate`                      |
 | `<broker>`      | Message broker used for event consumption or publishing.                                        | `kafka`, `rabbitmq`, `nats`    |
 | `<database>`    | Database technology used for persistence.                                                       | `postgres`, `mysql`, `mongo`   |
