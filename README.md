@@ -28,7 +28,7 @@ The goal is not to follow any of these approaches dogmatically, but to combine t
 │   └── proto
 ├── cmd
 │   └── <service>
-├── config
+├── configs
 ├── internal
 │   ├── application
 │   │   └── <feature>
@@ -94,7 +94,7 @@ The goal is not to follow any of these approaches dogmatically, but to combine t
 |---------------|--------------------------------------------------------------------------------------------------------------------------|
 | `api/`        | External contracts for HTTP, gRPC and asynchronous messaging.                                                            |
 | `cmd/`        | Process entry points. Keeps executable startup code thin and delegates application composition to `internal/bootstrap/`. |
-| `config/`     | Application configuration files.                                                                                         |
+| `configs/`    | Application configuration files.                                                                                         |
 | `internal/`   | Private application implementation.                                                                                      |
 | `migrations/` | Database migrations.                                                                                                     |
 | `test/`       | Cross-package tests.                                                                                                     |
